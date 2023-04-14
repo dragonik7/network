@@ -1,0 +1,41 @@
+# For more information: https://laravel.com/docs/sail
+version: '3'
+services:
+    pgsql:
+        image: 'postgres:15'
+        ports:
+            - '5432:5432'
+        environment:
+            POSTGRES_DB: 'django'
+            POSTGRES_USER: 'shami'
+            POSTGRES_PASSWORD: 'qwerty123'
+        volumes:
+            - './database/pgsql:/var/lib/postgresql/data'
+        networks:
+            sail:
+                ipv4_address: 172.22.0.2
+    redis:
+        image: 'redis:7.0.8'
+        ports:
+            - '6379:6379'
+        volumes:
+            - './database/redis:/data'
+        networks:
+            sail:
+                ipv4_address: 172.22.0.3
+        healthcheck:
+            test: [ "CMD", "redis-cli", "ping" ]
+            retries: 3
+            timeout: 5s
+networks:
+    sail:
+        driver: bridge
+        ipam:
+            config:
+                -   subnet: 172.22.0.0/16
+                    gateway: 172.22.0.1
+volumes:
+    sail-pgsql:
+        driver: local
+    sail-redis:
+        driver: local
