@@ -1,24 +1,12 @@
 # Create your views here.
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
 
 from post.models import Post
-from post.serializers import PostListSerializer
+from post.serializers import PostSerializer
 
 
-@api_view(['GET'])
-def index(request):
-	posts = Post.objects.order_by('-created_at')[:10]
-	posts = PostListSerializer(posts, many=True)
-	return Response(posts.data)
-
-
-@api_view(['GET'])
-def detail(request, post_id):
-	post = Post.objects.get(uuid=post_id)
-	post = PostListSerializer(post)
-	return Response(post.data)
-
-
-# @api_view(['POST'])
-# def create(request):
+class PostViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.ListModelMixin,
+                  mixins.DestroyModelMixin, GenericViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
