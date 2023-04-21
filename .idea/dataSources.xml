@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="django@172.22.0.2" uuid="2323f42b-c164-4bf4-9ed7-d44373e3bba6">
+    <data-source source="LOCAL" name="django@172.22.0.3" uuid="e96ba1e6-1257-40a9-9322-dce51997e44a">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://172.22.0.2:5432/django</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="0@172.22.0.3" uuid="b8d2c370-f220-40a2-a504-3a130d810ce2">
-      <driver-ref>redis</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>jdbc.RedisDriver</jdbc-driver>
-      <jdbc-url>jdbc:redis://172.22.0.3:6379/0</jdbc-url>
+      <jdbc-url>jdbc:postgresql://172.22.0.3:5432/django</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

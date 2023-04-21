@@ -13,7 +13,7 @@ services:
             - './database/pgsql:/var/lib/postgresql/data'
         networks:
             sail:
-                ipv4_address: 172.22.0.2
+                ipv4_address: 172.22.0.3
     redis:
         image: 'redis:7.0.8'
         ports:
@@ -22,7 +22,7 @@ services:
             - './database/redis:/data'
         networks:
             sail:
-                ipv4_address: 172.22.0.3
+                ipv4_address: 172.22.0.4
         healthcheck:
             test: [ "CMD", "redis-cli", "ping" ]
             retries: 3
