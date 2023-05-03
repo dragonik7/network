@@ -1,6 +1,20 @@
-# For more information: https://laravel.com/docs/sail
 version: '3'
 services:
+    web:
+        build:
+            context: ./app
+            dockerfile: docker/Dockerfile
+        command: python /django/manage.py runserver 0.0.0.0:8000
+        volumes:
+            - ./app:/django/
+        ports:
+            - "80:8000"
+        depends_on:
+            - redis
+            - pgsql
+        networks:
+            sail:
+                ipv4_address: 172.22.0.2
     pgsql:
         image: 'postgres:15'
         ports:
@@ -10,7 +24,7 @@ services:
             POSTGRES_USER: 'shami'
             POSTGRES_PASSWORD: 'qwerty123'
         volumes:
-            - './database/pgsql:/var/lib/postgresql/data'
+            - ./database/pgsql:/var/lib/postgresql/data
         networks:
             sail:
                 ipv4_address: 172.22.0.3
@@ -19,7 +33,7 @@ services:
         ports:
             - '6379:6379'
         volumes:
-            - './database/redis:/data'
+            - ./database/redis:/data
         networks:
             sail:
                 ipv4_address: 172.22.0.4
