@@ -31,8 +31,6 @@ services:
     redis:
         image: 'redis:7.0.8'
         user: "1000:1000"
-        ports:
-            - '6379:6379'
         volumes:
             - ./database/redis:/data
         networks:
