@@ -19,7 +19,6 @@ services:
     pgsql:
         image: 'postgres:15'
         restart: always
-        user: "1000:0"
         environment:
             POSTGRES_DB: '${POSTGRES_DB}'
             POSTGRES_USER: '${POSTGRES_USER}'
