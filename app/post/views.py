@@ -4,7 +4,7 @@ from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
 from post.models import Post
-from student.permissions import IsOwnerOrReadOnly
+from post.permissions import IsOwnerOrReadOnly
 from post.serializers import PostSerializer
 
 
