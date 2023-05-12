@@ -1,22 +1,25 @@
 import uuid as uuid
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-from django.contrib.auth.models import AbstractUser
+class Faculty(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class Specialty(models.Model):
+    name = models.CharField(max_length=100)
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
 
 class User(AbstractUser):
-    FACULTY_CHOICES = (
-        ('faculty1', 'Факультет 1'),
-        ('faculty2', 'Факультет 2'),
-        ('faculty3', 'Факультет 3'),
-    )
-    SPECIALTY_CHOICES = (
-        ('specialty1', 'Специальность 1'),
-        ('specialty2', 'Специальность 2'),
-        ('specialty3', 'Специальность 3'),
-    )
     COURSE_CHOICES = (
         (1, '1 курс'),
         (2, '2 курс'),
@@ -28,21 +31,31 @@ class User(AbstractUser):
         ('group2', 'Группа 2'),
         ('group3', 'Группа 3'),
     )
-    REGULAR = 'regular'
-    WARDEN = 'warden'
-    POST_MAKER = 'post_maker'
     PRIVILEGE_CHOICES = (
-        (REGULAR, 'Обычный пользователь'),
-        (WARDEN, 'Староста'),
-        (POST_MAKER, 'Автор постов'),
+        ('regular', 'Обычный пользователь'),
+        ('warden', 'Староста'),
+        ('post_maker', 'Автор постов'),
     )
 
     first_name = models.CharField(max_length=30, verbose_name='Имя')
-    faculty = models.CharField(max_length=20, choices=FACULTY_CHOICES, verbose_name='Факультет')
-    specialty = models.CharField(max_length=20, choices=SPECIALTY_CHOICES, verbose_name='Специальность')
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, verbose_name='Факультет')
+    specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE, verbose_name='Специальность')
     course = models.IntegerField(choices=COURSE_CHOICES, verbose_name='Курс')
     group = models.CharField(max_length=20, choices=GROUP_CHOICES, verbose_name='Группа')
-    privilege = models.CharField(max_length=20, choices=PRIVILEGE_CHOICES, default=REGULAR, verbose_name='Права')
+    privilege = models.CharField(max_length=20, choices=PRIVILEGE_CHOICES, verbose_name='Права')
+
+    @property
+    def is_regular(self):
+        return self.privilege == 'regular'
+
+    @property
+    def is_warden(self):
+        return self.privilege == 'warden'
+
+    @property
+    def is_post_maker(self):
+        return self.privilege == 'post_maker'
+
 
 class Category(models.Model):
 
@@ -66,7 +79,7 @@ class Post(models.Model):
     text = models.CharField(max_length=1000)
 
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-    user = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name="Пользователь")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь")
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
