@@ -5,7 +5,7 @@ services:
             context: ./app
             dockerfile: docker/Dockerfile
         command: python /django/manage.py runserver 0.0.0.0:8000
-        user: "1000:0"
+        user: "1000:1000"
         volumes:
             - ./app:/django/
         ports:
@@ -31,7 +31,6 @@ services:
     redis:
         image: 'redis:7.0.8'
         restart: always
-        user: "1000:0"
         volumes:
             - ./database/redis:/data
         networks:
