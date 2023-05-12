@@ -5,6 +5,7 @@ services:
             context: ./app
             dockerfile: docker/Dockerfile
         command: python /django/manage.py runserver 0.0.0.0:8000
+        restart: always
         user: "1000:1000"
         volumes:
             - ./app:/django/
