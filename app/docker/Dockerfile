@@ -11,4 +11,4 @@ RUN pip install --upgrade pip && pip install -r /django/requirements.txt
 EXPOSE 8000
 COPY ./docker/entrypoint.sh /django/docker/entrypoint.sh
 RUN chmod +x /django/docker/entrypoint.sh
-ENTRYPOINT ["/django/docker/entrypoint.sh"]
+RUN sh /django/docker/entrypoint.sh
