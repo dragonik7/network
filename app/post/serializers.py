@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from post.models import Post, Category
+from post.models import Post
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -10,14 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username']
 
 
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = '__all__'
-
-
 class PostSerializer(serializers.ModelSerializer):
-    category = serializers.StringRelatedField
     user = serializers.SlugRelatedField(
         read_only=True,
         slug_field='id',

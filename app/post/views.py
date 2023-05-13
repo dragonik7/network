@@ -4,7 +4,7 @@ from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
 from post.models import Post
-from post.permissions import IsOwnerOrReadOnly
+from post.permissions import CanCreatePosts, CanCreateNews
 from post.serializers import PostSerializer
 
 
@@ -18,4 +18,3 @@ class PostViewSet(mixins.CreateModelMixin,
     serializer_class = PostSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['category']
-    permission_classes = [IsOwnerOrReadOnly]

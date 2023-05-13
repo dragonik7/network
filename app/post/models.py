@@ -1,5 +1,3 @@
-import uuid as uuid
-
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -10,6 +8,10 @@ class Faculty(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'Факультет'
+        verbose_name_plural = 'Факультеты'
+
 
 class Specialty(models.Model):
     name = models.CharField(max_length=100)
@@ -17,6 +19,10 @@ class Specialty(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = 'Специальность'
+        verbose_name_plural = 'Специальности'
 
 
 class User(AbstractUser):
@@ -57,30 +63,25 @@ class User(AbstractUser):
         return self.privilege == 'post_maker'
 
 
-class Category(models.Model):
-
-    def __str__(self):
-        return self.category_title
-
-    class Meta:
-        verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
-
-    category_title = models.CharField(max_length=200)
-
-
 class Post(models.Model):
+    TYPE_CHOICES = (
+        ('news', 'Новость'),
+        ('announcement', 'Объявление')
+    )
 
-    def __str__(self):
-        return self.post_title
-
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    post_title = models.CharField(max_length=200)
-    text = models.CharField(max_length=1000)
-
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    title = models.CharField(max_length=200)
+    body = models.CharField(max_length=1000)
+    type = models.CharField(max_length=50, choices=TYPE_CHOICES)
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь")
     created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.title
+
+    def is_news(self):
+        return self.type == 'news'
+
+    def is_announcement(self):
+        return self.type == 'announcement'
 
     class Meta:
         verbose_name = 'Пост'
