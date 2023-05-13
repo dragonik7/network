@@ -18,3 +18,4 @@ class PostViewSet(mixins.CreateModelMixin,
     serializer_class = PostSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['category']
+    permission_classes = [CanCreatePosts, CanCreateNews]
