@@ -4,8 +4,7 @@ ENV PYTHONUNBUFFERED 1
 ENV PUTHONDONTWRITEBYTECODE 1
 
 WORKDIR /django
-
-COPY ./requirements.txt /django/app/requirements.txt
-RUN pip install --upgrade pip && pip install -r /django/app/requirements.txt
-
+COPY ./ /django
+RUN pip install -q --upgrade pip
+ENTRYPOINT ["/django/docker/entrypoint.sh"]
 EXPOSE 8000

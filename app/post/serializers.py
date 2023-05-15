@@ -1,13 +1,12 @@
-from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from post.models import Post
+from post.models import Post, User
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username']
+        fields = ('first_name', 'faculty', 'password', 'specialty', 'course', 'group', 'email')
 
 
 class PostSerializer(serializers.ModelSerializer):

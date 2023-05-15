@@ -73,7 +73,7 @@ class Post(models.Model):
     body = models.CharField(max_length=1000)
     type = models.CharField(max_length=50, choices=TYPE_CHOICES)
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь")
-    views = models.ManyToManyField(User)
+    views = models.ManyToManyField(User, related_name="views")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
