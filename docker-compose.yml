@@ -4,7 +4,6 @@ services:
         build:
             context: ./app
             dockerfile: docker/Dockerfile
-        command: sh /django/docker/entrypoint.sh
         volumes:
             - ./app:/django/
         ports:
