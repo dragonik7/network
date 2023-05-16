@@ -1,3 +1,5 @@
+import uuid
+
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 
@@ -5,14 +7,20 @@ from post.models import Post, User
 
 
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(
+        write_only=True,
+        required=True,
+    )
+
     class Meta:
         model = User
-        fields = ('username', 'faculty', 'password', 'specialty', 'course', 'group', 'email')
+        fields = ('first_name', 'faculty', 'password', 'specialty', 'course', 'group', 'email')
 
     def create(self, validated_data):
         return User.objects.create(
+            username=uuid.uuid4(),
             email=validated_data['email'],
-            username=validated_data['username'],
+            first_name=validated_data['first_name'],
             course=validated_data['course'],
             group=validated_data['group'],
             faculty=validated_data['faculty'],
