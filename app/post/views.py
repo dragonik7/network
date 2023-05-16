@@ -11,7 +11,7 @@ from post.serializers import PostSerializer, UserSerializer
 
 @extend_schema(
     tags=['Post'],
-    auth=[{"Bearer":[]}]
+    auth=[{"Bearer": []}]
 )
 class PostViewSet(mixins.CreateModelMixin,
                   mixins.RetrieveModelMixin,
