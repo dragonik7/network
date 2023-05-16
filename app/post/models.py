@@ -33,20 +33,20 @@ class User(AbstractUser):
         (4, '4 курс'),
     )
     GROUP_CHOICES = (
-        ('group1', 'Группа 1'),
-        ('group2', 'Группа 2'),
-        ('group3', 'Группа 3'),
+        (1, 'Группа 1'),
+        (2, 'Группа 2'),
+        (3, 'Группа 3'),
     )
     PRIVILEGE_CHOICES = (
         ('regular', 'Обычный пользователь'),
         ('warden', 'Староста'),
         ('post_maker', 'Автор постов'),
     )
-
+    first_name = models.CharField(max_length=30, verbose_name='Имя')
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, verbose_name='Факультет')
     specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE, verbose_name='Специальность')
     course = models.IntegerField(choices=COURSE_CHOICES, verbose_name='Курс')
-    group = models.CharField(max_length=20, choices=GROUP_CHOICES, verbose_name='Группа')
+    group = models.IntegerField(choices=GROUP_CHOICES, verbose_name='Группа')
     privilege = models.CharField(max_length=20, choices=PRIVILEGE_CHOICES, verbose_name='Права')
 
     @property
