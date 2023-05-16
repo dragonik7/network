@@ -43,7 +43,6 @@ class User(AbstractUser):
         ('post_maker', 'Автор постов'),
     )
 
-    first_name = models.CharField(max_length=30, verbose_name='Имя')
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, verbose_name='Факультет')
     specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE, verbose_name='Специальность')
     course = models.IntegerField(choices=COURSE_CHOICES, verbose_name='Курс')
